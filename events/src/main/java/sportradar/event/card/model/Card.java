@@ -25,9 +25,9 @@ public class Card {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CardType type;
+    private CardType cardType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "_event_club_id", nullable = false)
     private EventClub eventClub;
 }

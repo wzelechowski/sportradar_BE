@@ -16,8 +16,6 @@ public record ClubRequest(
         String abbreviation,
 
         @NotBlank
-        String countryCode,
-
-        Integer stagePosition
+        String countryCode
 ) {
 }

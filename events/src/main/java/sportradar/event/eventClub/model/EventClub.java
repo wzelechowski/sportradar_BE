@@ -3,6 +3,7 @@ package sportradar.event.eventClub.model;
 import jakarta.persistence.*;
 import lombok.*;
 import sportradar.event.card.model.Card;
+import sportradar.event.club.model.Club;
 import sportradar.event.event.model.Event;
 import sportradar.event.goal.model.Goal;
 
@@ -22,8 +23,9 @@ public class EventClub {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "_club_id", nullable = false)
-    private UUID clubId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "_club_id", nullable = false)
+    private Club club;
 
     @Column(name = "is_home", nullable = false)
     private Boolean isHome;
@@ -35,11 +37,11 @@ public class EventClub {
     private Integer stagePosition;
 
     @Builder.Default
-    @OneToMany(mappedBy = "event_clubs", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "eventClub", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Goal> goals = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "event_clubs", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "eventClub", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Card> cards = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

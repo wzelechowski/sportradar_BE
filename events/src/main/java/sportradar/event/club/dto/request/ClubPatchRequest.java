@@ -5,7 +5,6 @@ public record ClubPatchRequest(
         String officialName,
         String slug,
         String abbreviation,
-        String countryCode,
-        Integer stagePosition
+        String countryCode
 ) {
 }
