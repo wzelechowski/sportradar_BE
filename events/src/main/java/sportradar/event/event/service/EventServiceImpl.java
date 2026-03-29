@@ -2,20 +2,25 @@ package sportradar.event.event.service;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import sportradar.event.event.dto.criteria.EventSearchCriteria;
 import sportradar.event.event.dto.request.EventPatchRequest;
 import sportradar.event.event.dto.request.EventRequest;
 import sportradar.event.event.dto.response.EventResponse;
+import sportradar.event.event.dto.response.EventSimplifiedResponse;
 import sportradar.event.event.mapper.EventMapper;
 import sportradar.event.event.model.Event;
 import sportradar.event.event.model.EventStatus;
 import sportradar.event.event.repository.EventRepository;
+import sportradar.event.event.repository.EventSpecification;
 import sportradar.event.event.validator.EventValidator;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,17 +33,16 @@ public class EventServiceImpl implements EventService {
     private final EventValidator eventValidator;
 
     @Override
-    public List<EventResponse> getAllEvents() {
-        return eventRepository.findAll()
-                .stream()
-                .map(eventMapper::toResponse)
-                .toList();
+    public Page<EventSimplifiedResponse> getAllEvents(EventSearchCriteria criteria, Pageable pageable) {
+        Specification<Event> spec = new EventSpecification(criteria);
+        Page<Event> eventsPage = eventRepository.findAll(spec, pageable);
+        return eventsPage.map(eventMapper::toSimplifiedResponse);
     }
 
     @Override
-    public EventResponse getEventById(UUID id) {
-        Event event = eventRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
-        return eventMapper.toResponse(event);
+    public EventSimplifiedResponse getEventById(UUID id) {
+        Event event = eventRepository.findByIdWithClubs(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+        return eventMapper.toSimplifiedResponse(event);
     }
 
     @Override

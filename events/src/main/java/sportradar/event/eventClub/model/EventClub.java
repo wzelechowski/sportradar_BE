@@ -2,6 +2,7 @@ package sportradar.event.eventClub.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import sportradar.event.card.model.Card;
 import sportradar.event.club.model.Club;
 import sportradar.event.event.model.Event;
@@ -37,6 +38,7 @@ public class EventClub {
     private Integer stagePosition;
 
     @Builder.Default
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "eventClub", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Goal> goals = new ArrayList<>();
 

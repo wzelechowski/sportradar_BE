@@ -20,11 +20,12 @@ public class EventValidator {
         }
 
         validateClubRoles(event);
+        validateSeasonDate(event);
     }
 
     private void validatePlayedEventRules(Event event) {
         if (event.getEventClubs() != null && event.getEventClubs().size() != 2) {
-          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A played event must contains excatly 2 clubs");
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A played event must contains exactly 2 clubs");
         }
 
         if (event.getEventDate() != null && event.getEventDate().isAfter(LocalDateTime.now())) {
@@ -46,6 +47,17 @@ public class EventValidator {
 
             if (homeClubsCount != 1) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An event must contains exactly one home team and one away team");
+            }
+        }
+    }
+
+    private void validateSeasonDate(Event event) {
+        if (event.getEventDate() != null && event.getSeason() != null) {
+            int eventYear = event.getEventDate().getYear();
+            int seasonStartYear = event.getSeason();
+            if (eventYear < seasonStartYear || eventYear > seasonStartYear + 1) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event date " + event.getEventDate() + " is out of range for season "
+                        + event.getSeason() + ". Date must be within the season start year or the following year");
             }
         }
     }

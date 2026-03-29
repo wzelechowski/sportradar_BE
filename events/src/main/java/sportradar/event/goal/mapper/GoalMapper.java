@@ -8,6 +8,7 @@ import sportradar.event.goal.model.Goal;
 
 @Mapper(componentModel = "spring")
 public interface GoalMapper {
+
     GoalResponse toResponse(Goal goal);
 
     @Mapping(target = "id", ignore = true)

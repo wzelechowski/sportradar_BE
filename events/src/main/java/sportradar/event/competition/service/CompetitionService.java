@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface CompetitionService {
+
     List<CompetitionResponse> getAllCompetitions();
 
     CompetitionResponse getCompetitionById(UUID id);

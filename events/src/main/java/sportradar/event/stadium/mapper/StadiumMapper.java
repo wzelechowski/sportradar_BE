@@ -8,6 +8,7 @@ import sportradar.event.stadium.model.Stadium;
 
 @Mapper(componentModel = "spring")
 public interface StadiumMapper {
+
     StadiumResponse toResponse(Stadium stadium);
 
     @Mapping(target = "id", ignore = true)

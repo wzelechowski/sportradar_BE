@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/competitions")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class CompetitionController {
     private final CompetitionService competitionService;

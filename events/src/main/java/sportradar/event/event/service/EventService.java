@@ -1,16 +1,20 @@
 package sportradar.event.event.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import sportradar.event.event.dto.criteria.EventSearchCriteria;
 import sportradar.event.event.dto.request.EventPatchRequest;
 import sportradar.event.event.dto.request.EventRequest;
 import sportradar.event.event.dto.response.EventResponse;
+import sportradar.event.event.dto.response.EventSimplifiedResponse;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface EventService {
-    List<EventResponse> getAllEvents();
 
-    EventResponse getEventById(UUID id);
+    Page<EventSimplifiedResponse> getAllEvents(EventSearchCriteria criteria, Pageable pageable);
+
+    EventSimplifiedResponse getEventById(UUID id);
 
     EventResponse getEventWithDetails(UUID id);
 

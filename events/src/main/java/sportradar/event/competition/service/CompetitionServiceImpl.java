@@ -18,6 +18,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class CompetitionServiceImpl implements CompetitionService {
+
     private final CompetitionRepository competitionRepository;
     private final CompetitionMapper competitionMapper;
 

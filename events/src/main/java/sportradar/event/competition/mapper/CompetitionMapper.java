@@ -8,6 +8,7 @@ import sportradar.event.competition.model.Competition;
 
 @Mapper(componentModel = "spring")
 public interface CompetitionMapper {
+
     CompetitionResponse toResponse(Competition competition);
 
     @Mapping(target = "id", ignore = true)

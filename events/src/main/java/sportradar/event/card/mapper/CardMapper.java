@@ -10,6 +10,7 @@ import sportradar.event.card.model.Card;
 
 @Mapper(componentModel = "spring")
 public interface CardMapper {
+
     CardResponse toResponse(Card card);
 
     @Mapping(target = "id", ignore = true)

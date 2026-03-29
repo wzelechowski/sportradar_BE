@@ -8,6 +8,7 @@ import sportradar.event.club.model.Club;
 
 @Mapper(componentModel = "spring")
 public interface ClubMapper {
+
     ClubResponse toResponse(Club club);
 
     @Mapping(target = "id", ignore = true)

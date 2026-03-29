@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/clubs")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class ClubController {
     private final ClubService clubService;

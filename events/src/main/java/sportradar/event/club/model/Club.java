@@ -2,6 +2,7 @@ package sportradar.event.club.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@BatchSize(size = 100)
 public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

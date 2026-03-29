@@ -2,6 +2,7 @@ package sportradar.event.event.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import sportradar.event.competition.model.Competition;
 import sportradar.event.eventClub.model.EventClub;
 import sportradar.event.stadium.model.Stadium;
@@ -34,7 +35,7 @@ public class Event {
     private LocalDateTime eventDate;
 
     @Builder.Default
-    @Column(name = "event_clubs")
+    @BatchSize(size = 100)
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EventClub> eventClubs = new ArrayList<>();
 

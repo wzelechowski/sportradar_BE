@@ -11,6 +11,7 @@ import sportradar.event.goal.mapper.GoalMapper;
 
 @Mapper(componentModel = "spring", uses = {CardMapper.class, GoalMapper.class, ClubMapper.class}, builder = @Builder(disableBuilder = true))
 public interface EventClubMapper {
+
     EventClubResponse toResponse(EventClub eventClub);
 
     @Mapping(target = "id", ignore = true)

@@ -2,30 +2,45 @@ package sportradar.event.event.contoller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sportradar.event.event.dto.criteria.EventSearchCriteria;
 import sportradar.event.event.dto.request.EventPatchRequest;
 import sportradar.event.event.dto.request.EventRequest;
 import sportradar.event.event.dto.response.EventResponse;
+import sportradar.event.event.dto.response.EventSimplifiedResponse;
 import sportradar.event.event.service.EventService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/events")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class EventController {
     private final EventService eventService;
 
     @GetMapping
-    public ResponseEntity<List<EventResponse>> getAllEvents() {
-        return ResponseEntity.ok(eventService.getAllEvents());
+    public ResponseEntity<Page<EventSimplifiedResponse>> getAllEvents(
+        @ModelAttribute EventSearchCriteria criteria,
+        @PageableDefault(
+            page = 0,
+            size = 10,
+            sort = "eventDate",
+            direction = Sort.Direction.DESC
+        ) Pageable pageable
+    ) {
+        Page<EventSimplifiedResponse> eventsPage = eventService.getAllEvents(criteria, pageable);
+        return ResponseEntity.ok(eventsPage);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventResponse> getEventById(@PathVariable UUID id) {
+    public ResponseEntity<EventSimplifiedResponse> getEventById(@PathVariable UUID id) {
         return ResponseEntity.ok(eventService.getEventById(id));
     }
 
