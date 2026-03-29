@@ -9,7 +9,7 @@ import sportradar.event.event.model.Event;
 import sportradar.event.eventClub.mapper.EventClubMapper;
 import sportradar.event.stadium.mapper.StadiumMapper;
 
-@Mapper(componentModel = "spring", uses = {EventClubMapper.class, StadiumMapper.class, CompetitionMapper.class})
+@Mapper(componentModel = "spring", uses = {EventClubMapper.class, StadiumMapper.class, CompetitionMapper.class}, builder = @Builder(disableBuilder = true))
 public interface EventMapper {
     EventResponse toResponse(Event event);
 

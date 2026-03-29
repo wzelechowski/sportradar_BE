@@ -8,6 +8,6 @@ public record ClubResponse(
         String officialName,
         String slug,
         String abbreviation,
-        String countryCode
+        String clubCountryCode
 ) {
 }

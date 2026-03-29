@@ -9,7 +9,7 @@ import sportradar.event.eventClub.dto.response.EventClubResponse;
 import sportradar.event.eventClub.model.EventClub;
 import sportradar.event.goal.mapper.GoalMapper;
 
-@Mapper(componentModel = "spring", uses = {CardMapper.class, GoalMapper.class, ClubMapper.class})
+@Mapper(componentModel = "spring", uses = {CardMapper.class, GoalMapper.class, ClubMapper.class}, builder = @Builder(disableBuilder = true))
 public interface EventClubMapper {
     EventClubResponse toResponse(EventClub eventClub);
 

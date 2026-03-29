@@ -18,6 +18,6 @@ public record EventResponse(
         LocalDateTime eventDate,
         CompetitionResponse competition,
         StadiumResponse stadium,
-        List<EventClubResponse> clubs
+        List<EventClubResponse> eventClubs
 ) {
 }

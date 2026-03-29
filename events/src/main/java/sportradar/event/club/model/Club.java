@@ -28,6 +28,6 @@ public class Club {
     @Column(nullable = false)
     private String abbreviation;
 
-    @Column(name = "team_country_code", nullable = false)
-    private String teamCountryCode;
+    @Column(name = "club_country_code", nullable = false)
+    private String clubCountryCode;
 }

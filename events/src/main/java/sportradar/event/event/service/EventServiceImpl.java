@@ -1,5 +1,6 @@
 package sportradar.event.event.service;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private final EventQueryFacade eventQueryFacade;
+    private final EntityManager entityManager;
 
     @Override
     public List<EventResponse> getAllEvents() {
@@ -46,8 +48,10 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public EventResponse create(EventRequest request) {
         Event event = eventMapper.toEntity(request);
-        event = eventRepository.save(event);
-        return eventMapper.toResponse(event);
+        event = eventRepository.saveAndFlush(event);
+        entityManager.clear();
+        Event fetchedEvent = eventQueryFacade.getEventWithDetails(event.getId());
+        return eventMapper.toResponse(fetchedEvent);
     }
 
     @Override
@@ -62,8 +66,10 @@ public class EventServiceImpl implements EventService {
     public EventResponse update(UUID id, EventRequest request) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
         eventMapper.updateEntity(event, request);
-        eventRepository.save(event);
-        return eventMapper.toResponse(event);
+        event = eventRepository.saveAndFlush(event);
+        entityManager.clear();
+        Event fetchedEvent = eventQueryFacade.getEventWithDetails(event.getId());
+        return eventMapper.toResponse(fetchedEvent);
     }
 
     @Override
@@ -71,7 +77,9 @@ public class EventServiceImpl implements EventService {
     public EventResponse patch(UUID id, EventPatchRequest request) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
         eventMapper.patchEntity(event, request);
-        eventRepository.save(event);
-        return eventMapper.toResponse(event);
+        event = eventRepository.saveAndFlush(event);
+        entityManager.clear();
+        Event fetchedEvent = eventQueryFacade.getEventWithDetails(event.getId());
+        return eventMapper.toResponse(fetchedEvent);
     }
 }
