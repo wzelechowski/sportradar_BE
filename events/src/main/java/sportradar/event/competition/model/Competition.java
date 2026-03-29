@@ -24,4 +24,8 @@ public class Competition {
 
     @Column(name ="origin_name", nullable = false)
     private String originName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sport_type", nullable = false)
+    private SportType sportType;
 }

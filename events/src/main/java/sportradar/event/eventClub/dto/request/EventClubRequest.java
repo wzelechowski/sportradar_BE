@@ -16,8 +16,6 @@ public record EventClubRequest(
         @NotNull(message = "isHome flag is required")
         Boolean isHome,
 
-        Boolean isWinner,
-
         @Min(value = 1, message = "Stage position must be greater than 0")
         Integer stagePosition,
 

@@ -11,7 +11,6 @@ import java.util.UUID;
 public record EventClubPatchRequest(
         UUID clubId,
         Boolean isHome,
-        Boolean isWinner,
 
         @Min(value = 1, message = "Stage position must be greater than 0")
         Integer stagePosition,
