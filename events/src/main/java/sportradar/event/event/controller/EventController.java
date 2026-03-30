@@ -1,5 +1,6 @@
 package sportradar.event.event.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,7 @@ public class EventController {
     @GetMapping
     public ResponseEntity<Page<EventSimplifiedResponse>> getAllEvents(
         @ModelAttribute EventSearchCriteria criteria,
-        @PageableDefault(
+        @Parameter(hidden = true) @PageableDefault(
             page = 0,
             size = 10,
             sort = "eventDate",

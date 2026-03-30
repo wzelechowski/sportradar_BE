@@ -33,6 +33,8 @@ services:
       - -c
       - "/bin/echo 'postgres:5432:*:postgres:password' > /tmp/pgpassfile && chmod 600 /tmp/pgpassfile && /entrypoint.sh"
     restart: unless-stopped
+    networks: 
+      - sportradar
       
   events:
     container_name: events-service
