@@ -55,6 +55,10 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public EventResponse create(EventRequest request) {
         Event event = eventMapper.toEntity(request);
+        if (request.stadiumId() == null) {
+            event.setStadium(null);
+        }
+
         eventValidator.validate(event);
         calculateWinner(event);
         event = eventRepository.saveAndFlush(event);

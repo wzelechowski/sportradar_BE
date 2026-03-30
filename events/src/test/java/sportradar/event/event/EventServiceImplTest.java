@@ -50,6 +50,9 @@ public class EventServiceImplTest {
     private EventQueryFacade eventQueryFacade;
 
     @Mock
+    private EntityManager entityManager;
+
+    @Mock
     private EventValidator eventValidator;
 
     @InjectMocks
