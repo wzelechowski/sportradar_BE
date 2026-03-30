@@ -1,4 +1,4 @@
-package sportradar.event.event.contoller;
+package sportradar.event.event.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

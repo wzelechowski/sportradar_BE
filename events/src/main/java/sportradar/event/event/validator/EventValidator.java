@@ -3,10 +3,16 @@ package sportradar.event.event.validator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
+import sportradar.event.club.model.Club;
 import sportradar.event.event.model.Event;
 import sportradar.event.event.model.EventStatus;
+import sportradar.event.eventClub.model.EventClub;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class EventValidator {
@@ -21,6 +27,7 @@ public class EventValidator {
 
         validateClubRoles(event);
         validateSeasonDate(event);
+        validateClubsUnique(event);
     }
 
     private void validatePlayedEventRules(Event event) {
@@ -58,6 +65,20 @@ public class EventValidator {
             if (eventYear < seasonStartYear || eventYear > seasonStartYear + 1) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event date " + event.getEventDate() + " is out of range for season "
                         + event.getSeason() + ". Date must be within the season start year or the following year");
+            }
+        }
+    }
+
+    private void validateClubsUnique(Event event) {
+        if (event.getEventClubs() != null && !event.getEventClubs().isEmpty()) {
+            Set<UUID> uniqueClubIds = event.getEventClubs().stream()
+                    .map(EventClub::getClub)
+                    .filter(Objects::nonNull)
+                    .map(Club::getId)
+                    .collect(Collectors.toSet());
+
+            if (uniqueClubIds.size() != 2) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "An event have to be played by 2 unique clubs");
             }
         }
     }
