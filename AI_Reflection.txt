@@ -1,0 +1,11 @@
+During development, I used an AI assistant (LLM) as a pair-programming tool to speed up routine tasks, consult on architecture, and troubleshoot, while carefully verifying all suggestions.
+
+Main areas where AI supported development:
+Database and Entity Design: Assisted in designing Hibernate/JPA relationships, ensuring proper OneToMany/ManyToOne mappings and adherence to 3NF.
+Filtering and Pagination: Helped implement Spring Data JPA Specifications for dynamic filtering and backend pagination.
+Performance Issues (MultipleBagFetchException): Alerted me to potential N+1 problems, but its suggested solution was suboptimal. I implemented a better hybrid approach (main query + batch fetching) using insights from StackOverflow: [INSERT_LINK_HERE].
+Validation Edge Cases: Guided identification of potential gaps in business logic, helping build a robust EventValidator.
+Unit Tests: Assisted in structuring and writing tests for EventValidator and EventServiceImpl to cover core logic and edge cases.
+Database Seeding: Generated code for DatabaseSeeder to populate initial teams and sample matches automatically.
+
+Note: The AI tool was used as an assistant for guidance, code examples, and brainstorming. All final decisions, implementations, and fixes were made by me.
