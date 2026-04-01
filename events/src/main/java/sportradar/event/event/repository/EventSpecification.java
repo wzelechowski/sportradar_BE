@@ -13,16 +13,16 @@ public record EventSpecification(EventSearchCriteria criteria) implements Specif
 
     @Override
     public Predicate toPredicate(Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+        Join<Event, Competition> competitionJoin;
+
         if (query.getResultType() != Long.class) {
             root.fetch("competition", JoinType.LEFT);
         }
 
+        competitionJoin = root.join("competition", JoinType.LEFT);
         List<Predicate> predicates = new ArrayList<>();
 
         if (criteria.sportType() != null && !criteria.sportType().isEmpty()) {
-            Join<Event, Competition> competitionJoin = (Join<Event, Competition>) root.getFetches().stream()
-                    .filter(f -> f.getAttribute().getName().equals("competition"))
-                    .findFirst().orElseThrow();
             predicates.add(cb.equal(competitionJoin.get("sportType"), criteria.sportType()));
         }
 
